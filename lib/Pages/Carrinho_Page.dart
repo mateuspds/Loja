@@ -98,7 +98,8 @@ class CarrinhoPage extends StatelessWidget {
                 builder: (context, value, child) => ListView.builder(
                   itemCount: provider.itenscart.length,
                   itemBuilder: (context, index) => CardWidget(
-                      carrinho: provider.itenscart.values.toList()[index]),
+                      carrinho: provider.itenscart.values.toList()[index],
+                      ),
                 ),
               ),
             ),

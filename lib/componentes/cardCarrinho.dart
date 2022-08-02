@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:loja/Models/cart.dart';
 import 'package:loja/Models/cartList.dart';
+import 'package:loja/Models/produto.dart';
 import 'package:provider/provider.dart';
 
 class CardWidget extends StatelessWidget {
@@ -16,28 +17,54 @@ class CardWidget extends StatelessWidget {
       background: Container(
         color: Theme.of(context).colorScheme.error,
         alignment: Alignment.centerRight,
-        padding:const EdgeInsets.only(
+        padding: const EdgeInsets.only(
           right: 20,
         ),
-        margin:const EdgeInsets.symmetric(
-          horizontal: 15, vertical: 4,
+        margin: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 4,
         ),
-        child:const Icon(
+        child: const Icon(
           Icons.delete,
           size: 40,
         ),
       ),
       onDismissed: (_) {
-        Provider.of<CartList>(context, listen: false).removeProduto(carrinho.idProduto);
+        Provider.of<CartList>(context, listen: false)
+            .removeProduto(carrinho.idProduto);
       },
       child: Card(
         child: Padding(
-          padding:const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: ListTile(
             title: Text(carrinho.tiulo),
-            trailing: Text("${carrinho.quantidade.toString()}X"),
-            subtitle:
-                Text("Total: ${(carrinho.quantidade * carrinho.precoTotal).toStringAsFixed(2)}"),
+            trailing: FittedBox(
+              fit: BoxFit.fill,
+              child: Row(
+                children: <Widget>[
+                  IconButton(
+                    onPressed: () {
+                       Provider.of<CartList>(context, listen: false)
+            .aumentarQuantidade(carrinho);
+                    },
+                    icon: Icon(Icons.add),
+                  ),
+                  Text(
+                    carrinho.quantidade.toString(),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      Provider.of<CartList>(context, listen: false)
+            .diminuirQuantidade(carrinho);
+                    },
+                    icon: Icon(Icons.remove),
+                  )
+                ],
+              ),
+            ),
+            subtitle: Text(
+                "Total: ${(carrinho.quantidade * carrinho.precoTotal).toStringAsFixed(2)}"),
             leading: CircleAvatar(
               backgroundColor: Theme.of(context).colorScheme.primary,
               child: Padding(

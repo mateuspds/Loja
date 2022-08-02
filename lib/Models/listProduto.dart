@@ -1,4 +1,7 @@
+import 'dart:js';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:loja/Date/dateProducts.dart';
 import 'package:loja/Models/produto.dart';
 
@@ -17,6 +20,9 @@ class ListProduto with ChangeNotifier {
 
   void Favorito() {
     _favoritos = true;
+    if (_itens.where((element) => element.favorito).toList().length < 1) {
+      _favoritos = false;
+    }
     notifyListeners();
   }
 

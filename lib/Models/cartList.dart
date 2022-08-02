@@ -47,6 +47,31 @@ class CartList with ChangeNotifier {
     }
   }
 
+  void aumentarQuantidade(Carrinho produto) {
+    _cartList.update(
+        produto.idProduto,
+        (value) => Carrinho(
+            quantidade: value.quantidade + 1,
+            precoTotal: value.precoTotal,
+            idCarrinho: value.idCarrinho,
+            idProduto: value.idProduto,
+            tiulo: value.tiulo));
+    notifyListeners();
+  }
+
+  void diminuirQuantidade(Carrinho produto) {
+    _cartList.update(
+      
+        produto.idProduto,
+        (value) => Carrinho(
+            quantidade:value.quantidade>1 ?value.quantidade -1 : value.quantidade,
+            precoTotal: value.precoTotal,
+            idCarrinho: value.idCarrinho,
+            idProduto: value.idProduto,
+            tiulo: value.tiulo));
+    notifyListeners();
+  }
+
   void clear() {
     _cartList = {};
     notifyListeners();
